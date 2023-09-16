@@ -16,13 +16,9 @@ return new class extends Migration
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('semester', ['1','2','3','4','5','6','7','8']);
-            $table->unsignedBigInteger('stream_id');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
-            
-            $table->foreign('stream_id')->references('id')->on('streams')->cascadeOnUpdate()->restrictOnDelete();
         });
     }
 

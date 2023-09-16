@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('group_subject_teacher_id');
+            $table->unsignedBigInteger('group_teacher_id');
             $table->integer('present');
             $table->integer('absent');
             $table->integer('leave');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreign('group_subject_teacher_id')->references('id')->on('group_subject_teacher')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreign('group_teacher_id')->references('id')->on('group_teacher')->restrictOnDelete()->cascadeOnUpdate();
         });
         // Schema::table('attendances', function (Blueprint $table) {
         //     $table->dropColumn('status');

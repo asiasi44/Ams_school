@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('group_subject_teacher', function (Blueprint $table) {
-            $table->unique(['user_id','group_subject_id']);
+        Schema::table('group_teacher', function (Blueprint $table) {
+            $table->unique(['user_id','group_id']);
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('group_subject_teacher', function (Blueprint $table) {
+        Schema::table('group_teacher', function (Blueprint $table) {
             //
         });
     }
