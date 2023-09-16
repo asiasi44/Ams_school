@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Student extends Authenticatable
 {
     use HasFactory, SoftDeletes;
-    
+
     protected $guard = 'student';
 
     protected $hidden = ['id','google_id'];
@@ -25,7 +25,11 @@ class Student extends Authenticatable
      *
      * @var array
      */
-    protected $fillable=[ 'roll_no', 'name', 'email','batch_id', 'semester', 'status' ];
+    protected $fillable=[
+        'roll_no',
+         'name',
+         'batch_id',
+         'status' ];
 
     /**
      * Defines one-to-many-relationship between student and batch
@@ -36,8 +40,8 @@ class Student extends Authenticatable
     {
         return $this->belongsTo(Batch::class,'batch_id','id');
     }
-    
-        
+
+
     /**
      * Defines many-to-many relationship between groups and students
      *
@@ -47,7 +51,7 @@ class Student extends Authenticatable
     {
         return $this->belongsToMany(Group::class)->withTrashed();
     }
-    
+
     /**
      * Defines one-to-many relationship between student and attendance
      *
@@ -57,14 +61,14 @@ class Student extends Authenticatable
     {
         return $this->hasMany(Attendance::class);
     }
-        
+
     public function getAbsentDays($id)
     {
         $attendances =  Attendance::where('student_id',$this->id)
                             ->where('attendances.group_subject_teacher_id',$id)
                             ->where('created_at','>', Carbon::now()->subDays(6))
                             ->sum('absent');
-                           
+
         return $attendances;
     }
 
@@ -74,7 +78,7 @@ class Student extends Authenticatable
                             ->where('attendances.group_subject_teacher_id',$id)
                             ->where('created_at','>', Carbon::now()->subDays(6))
                             ->sum('leave');
-                           
+
         return $attendances;
     }
 
@@ -130,7 +134,7 @@ class Student extends Authenticatable
         }
         return true;
     }
-    
 
-    
+
+
 }
