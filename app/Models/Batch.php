@@ -17,12 +17,10 @@ class Batch extends Model
      */
     public $fillable=[
         'name',
-        'stream_id',
-        'semester',
         'start_date',
         'end_date'
     ];
-    
+
     /**
      * Defines many-to-one relationship between stream and batch
      *
@@ -32,7 +30,7 @@ class Batch extends Model
         return $this->belongsTo(Stream::class);
     }
 
-        
+
     /**
      * Defines many-to-one relationship between students and batch
      *
@@ -43,7 +41,7 @@ class Batch extends Model
     }
 
 
-            
+
     /**
      * Defines many-to-one relationship between groups and batch
      *
