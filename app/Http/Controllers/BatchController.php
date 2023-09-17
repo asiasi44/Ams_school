@@ -104,6 +104,7 @@ class BatchController extends Controller
     public function destroy($id)
     {
         try{
+            
             $batch = Batch::findOrFail($id);
             //delete everything assosciated to the batch
             $groups = Group::withTrashed()->where('batch_id',$id)->get();
