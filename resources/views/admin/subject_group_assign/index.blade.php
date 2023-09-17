@@ -30,7 +30,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $group->name }}</td>
                         <td>{{ $group->batch->name }}</td>
-                        <td>{{ $group->batch->stream->name }}</td>
+                        <td></td>
                         <td>
                             @foreach ($group->subjects as $subject)
                                 {{ $subject->name }}

@@ -3,7 +3,7 @@
     <div class="col-md-6 mt-5">
         <div class="align-items-center">
             <label for="batch_id" class=" col-md-4 form-label" >Batch<span class="red_text"><b>*</b></span></label>
-            <select id="batch_id" name="batch_id" class="batch-livesearch col-md-4 form-control form-select  form-select-sm " data-placeholder="-- Choose Batch --">
+            <select id="batch_id" name="batch_id" class="col-md-4 form-control form-select  form-select-sm " data-placeholder="-- Choose Batch --">
                <option value="" selected disabled >--Choose Batch--</option>
                 @foreach($batches as $batch)
                 <option value="{{ $batch->id }}" 
@@ -24,7 +24,7 @@
     
     <div class="col-md-6 mt-5">
         <div class="align-items-center">
-            <label for="student_id" class=" col-md-4 form-label" >Student<span class="red_text"><b>*</b></span></label>
+            <label for="student_id" class="col-md-4 form-label" >Student<span class="red_text"><b>*</b></span></label>
             {{-- select starts here --}}
             <select class="js-example-basic-multiple" name="students[]" multiple="multiple" data-placeholder="--Choose Student--">
                 @foreach($students as $student)
@@ -61,7 +61,7 @@
         <div class="align-items-center">
             <label for="group_id" class=" col-md-4 form-label" >Section<span class="red_text"><b>*</b></span></label>
             
-            <select id="group_id" name="group_id" class="group-livesearch col-md-4 form-control form-select form-select-sm" >
+            <select id="group_id" name="group_id" class="col-md-4 form-control form-select form-select-sm" >
                <option value="" disabled selected class="text-center">--Choose Section--</option>
                     @foreach($groups as $group)
                     <option 

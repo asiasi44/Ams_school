@@ -24,7 +24,7 @@
             @forelse($groups as $group)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>Class of {{ $group->batch->name}} {{ $group->batch->stream->name }} - {{ $group->name }}</td>
+                        <td>Class of {{ $group->batch->name}}  - {{ $group->name }}</td>
                         <td>
                             @foreach ($group->students as $student)
                                 {{ $student->name }}

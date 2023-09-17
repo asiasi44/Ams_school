@@ -25,7 +25,6 @@ class StudentGroupAssignRequest extends FormRequest
     public function rules()
     {
         return [
-            'stream_id' => 'required|exists:streams,id',
             'batch_id' => 'required|exists:batches,id',
             'students'=>'required',
             'students.*' => 'required|exists:students,id',

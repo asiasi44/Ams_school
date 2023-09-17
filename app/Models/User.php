@@ -76,12 +76,7 @@ class User extends Authenticatable
      *
      * @return void
      */
-    public function groupSubjects()
-    {
-        return $this->belongsToMany(GroupSubject::class, 'group_subject_teacher','user_id','group_subject_id')
-                    ->withPivot('id','max_class_per_day','days')
-                    ->withTrashed();
-    }
+
 
 
 
