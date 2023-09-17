@@ -18,7 +18,7 @@
                             onchange="evaluateAttendanceFilter()">
                         <option disabled selected>--Choose Batch--</option>
                         @foreach ($batches as $batch)
-                            <option value="{{$batch->id}}"> {{$batch->name }} - {{$batch->stream->name}}</option>
+                            <option value="{{$batch->id}}"> {{$batch->name }} - </option>
                         @endforeach
                     </select>
                 </div>
@@ -146,7 +146,7 @@
                             <td colspan="" class="border-end {{
                                     $presentPercentage[$loop->iteration - 1] == '-' ?'-': (($presentPercentage[$loop->iteration - 1] < 90 )? 'bg-danger':(($leavePercentage[$loop->iteration - 1]>20) ? 'bg-warning': ''))
                                 }}"> {{ $presentPercentage[$loop->iteration - 1] == '-' ? '-' : ($presentPercentage[$loop->iteration - 1].'%')}} </td>
-                        @endforeach                        
+                        @endforeach
                     @else
                         <td>-</td>
                     @endif

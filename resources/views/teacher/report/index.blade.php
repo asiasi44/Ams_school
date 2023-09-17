@@ -8,16 +8,16 @@
 
     </div>
     <form action="{{ route("report.teacherSearch")}}">
-        
+
     <div class="row">
         <div class="col-md-6 mt-5">
             <div class="align-items-center">
                 <label for="batch" class=" col-md-4 form-label" >Batch</label>
-                
+
                 <select id="batch" name="batch" class="col-md-4 form-control form-select  form-select-sm " >
                    <option  disabled selected>--Choose Batch--</option>
                    @foreach ($batches as $batch)
-                       <option value="{{$batch->id}}"> {{$batch->name }} - {{$batch->stream->name}}</option>
+                       <option value="{{$batch->id}}"> {{$batch->name }} - </option>
                    @endforeach
                 </select>
             </div>
@@ -25,7 +25,7 @@
         <div class="col-md-6 mt-5">
             <div class="align-items-center">
                 <label for="student" class=" col-md-4 form-label" >Student</label>
-                
+
                 <select id="student" name="student" class="col-md-4 form-control form-select  form-select-sm " >
                    <option  disabled selected>--Choose Student--</option>
                 </select>
@@ -34,7 +34,7 @@
         <div class="col-md-6 my-5 ">
             <div class=" align-items-center">
                 <label for="subject" class=" col-md-4 form-label" >Subject</label>
-                
+
                 <select id="subject" name="subject" class="col-md-4 form-control form-select  form-select-sm " >
                    <option  disabled selected>--Choose Subject--</option>
                 </select>
@@ -84,12 +84,12 @@
                         ({{ $subject->getClassDays()}})
                     </th>
                 @empty
-                    <td colspan="3" class="text-center"> 
+                    <td colspan="3" class="text-center">
                         <h5>
                             No Subject Assigned to this batch
                         </h5>
                     </td>
-                            
+
                 @endforelse
             </tr>
         </thead>
@@ -102,7 +102,7 @@
                         {{-- <td class="border-end">Leave</td>   --}}
                         <td colspan="2" class="border-end">Present Percentage</td>
                 @empty
-                    <td colspan="4"></td>                  
+                    <td colspan="4"></td>
                 @endforelse
             </tr>
             @foreach ($students as $student)
@@ -118,12 +118,12 @@
                         @endphp
                     <td  colspan="2" class="border-end {{
                         $presentPercentage == '-' ?'-': (($presentPercentage < 90 )? 'bg-danger':(($leavePercentage>20) ? 'bg-warning': ''))
-                    }}"> {{ $presentPercentage == '-' ? '-' : (min($presentPercentage,100).'%')}}</td>    
+                    }}"> {{ $presentPercentage == '-' ? '-' : (min($presentPercentage,100).'%')}}</td>
                     @empty
                         <td colspan="3"  class="border-end"></td>
                     @endforelse
                 </tr>
-                
+
             @endforeach
         </tbody>
         <tfoot>
@@ -131,7 +131,7 @@
                 <td class="border-end"> Total Classes</td>
                 @forelse ($subjects as $subject)
                 <td colspan="2" class="border-end">
-                    @foreach ( $subject->groups as $group) 
+                    @foreach ( $subject->groups as $group)
                         Section {{$group->name}}: {{$subject->getTotalClasses($group ,$startDate ?? null, $endDate ?? null)}}
                     @endforeach
                 </td>
@@ -182,12 +182,12 @@
             batchChange(batch).then(()=>{
                 if(student)
                 {
-                    $('#student').val(student).trigger('change');  
+                    $('#student').val(student).trigger('change');
                 }
 
                 if(subject)
                 {
-                    $('#subject').val(subject).trigger('change');  
+                    $('#subject').val(subject).trigger('change');
                 }
 
                 if(startDate)
@@ -198,7 +198,7 @@
                 {
                     $('#end_date').val(endDate);
                 }
-            });            
+            });
         }
     });
 
@@ -232,7 +232,7 @@
                     return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
             }
-            return false;        
+            return false;
     };
 
     async function fetchBatch(batchValue){
@@ -315,10 +315,10 @@
                     icon: 'error',
                     title: 'End date should be later than start date'
                 })
-            
+
             submitBtn.disabled = true;
         }else{
-            submitBtn.disabled = false;  
+            submitBtn.disabled = false;
         }
     }
 </script>

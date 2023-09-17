@@ -28,7 +28,7 @@
                 <div class="col-5">
                     <select class="form-select form-select-sm" id="select_absent_month" onchange="absentees(event)" >
                         @for($i=1;$i<=12;$i++)
-                        <option value='{{ $i }}' 
+                        <option value='{{ $i }}'
                             {{ $i == date('m') ? 'selected' : '' }}
                         >{{DateTime::createFromFormat('!m', $i)->format('F')}}</option>
                         @endfor
@@ -39,10 +39,10 @@
                     <select class="form-select form-select-sm w-auto" id="select_absent_batch" name="absentees_batch_id" onchange="absentees(event)" >
                         <option value="">All</option>
                         @foreach($batches as $batch)
-                        <option value='{{ $batch->id }}' 
+                        <option value='{{ $batch->id }}'
                             {{ $batch->id == old('batch_id') ? 'selected' : '' }}
                         >
-                        {{$batch->name}} - {{$batch->stream->name}}
+                        {{$batch->name}} -
                         </option>
                         @endforeach
                     </select>
@@ -72,10 +72,10 @@
                     <select class="form-select form-select-sm" id="select_linechart_batch" name="linechart_batch_id" >
                         <option value="">All</option>
                         @foreach($batches as $batch)
-                        <option value='{{ $batch->id }}' 
+                        <option value='{{ $batch->id }}'
                             {{ $batch->id == old('batch_id') ? 'selected' : '' }}
                         >
-                        {{$batch->name}} - {{$batch->stream->name}}
+                        {{$batch->name}} -
                         </option>
                         @endforeach
                     </select>
@@ -97,7 +97,7 @@
                 <div class="col-4">
                     <select class="form-select form-select-sm" id="select_piechart_month">
                         @for($i=1;$i<=12;$i++)
-                        <option id="piechart_month" value='{{ $i }}' 
+                        <option id="piechart_month" value='{{ $i }}'
                              {{ $i == date('m') ? 'selected' : '' }}
                         >{{DateTime::createFromFormat('!m', $i)->format('F');}}</option>
                         @endfor
@@ -107,10 +107,10 @@
                     <select class="form-select form-select-sm" id="select_piechart_batch" name="piechart_batch_id" >
                         <option value="">All</option>
                         @foreach($batches as $batch)
-                        <option value='{{ $batch->id }}' id="piechart_batch" 
+                        <option value='{{ $batch->id }}' id="piechart_batch"
                             {{ $batch->id == old('batch_id') ? 'selected' : '' }}
                         >
-                        {{$batch->name}} - {{$batch->stream->name}}
+                        {{$batch->name}} -
                         </option>
                         @endforeach
                     </select>
@@ -138,7 +138,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ date('h:i A Y-m-d',strtotime($user->last_login)) }}</td>                
+                <td>{{ date('h:i A Y-m-d',strtotime($user->last_login)) }}</td>
             </tr>
             @empty
                 <tr>
@@ -194,7 +194,7 @@
             }
         ]
         };
-        
+
         //options
         var options = {
         responsive: true,
@@ -213,7 +213,7 @@
             fontSize: 9
             }
         },
-        };     
+        };
 
         //create Pie Chart class object
         chart1 = new Chart(ctx, {
@@ -224,7 +224,7 @@
     }
 
 
-    // Pie-Chart Filter 
+    // Pie-Chart Filter
     var select_piechart_month = document.getElementById('select_piechart_month');
     var select_piechart_batch = document.getElementById('select_piechart_batch');
     select_piechart_month.addEventListener('change', function handleChange(event) {
@@ -339,7 +339,7 @@
 
 
 
-    // Line Chart Filter 
+    // Line Chart Filter
     var select_linechart_month = document.getElementById('select_linechart_month');
     var select_linechart_batch = document.getElementById('select_linechart_batch');
     //month-linechart-filter
@@ -403,7 +403,7 @@
 
 
 
-    // Pie-Chart Filter 
+    // Pie-Chart Filter
     var select_piechart_month = document.getElementById('select_piechart_month');
     select_piechart_month.addEventListener('change', function handleChange(event) {
         event.preventDefault();

@@ -1,14 +1,14 @@
 {{-- {{dd($mainGroups->first()->filterSubject())}} --}}
 <div>
     <p>Hello All,</p>
-    <p>Please find the details of today's attendance of Class of {{$batch->name}} - {{$batch->stream->name}} ( Semester {{ $batch->semester}}).</p>
+    <p>Please find the details of today's attendance of Class of {{$batch->name}} -  ( Semester {{ $batch->semester}}).</p>
     <p> {{ date('M d , Y')}} </p>
     @if(!empty($mainGroups))
         @foreach ($mainGroups as $mainGroup)
         <table border="1">
             <thead>
                 <tr style="text-align: center">
-                    <td colspan="{{count($mainGroup->filterSubject())+1}}"> 
+                    <td colspan="{{count($mainGroup->filterSubject())+1}}">
 
                         Section {{ $mainGroup->name ?? 'N/A' }}
                     </td>
@@ -108,8 +108,8 @@
             <table border="1">
                 <thead>
                     <tr style="text-align: center">
-                        <td colspan="{{count($electiveGroup->filterSubject())+1}}"> 
-    
+                        <td colspan="{{count($electiveGroup->filterSubject())+1}}">
+
                             Section {{ $electiveGroup->name ?? 'N/A' }}
                         </td>
                     </tr>

@@ -76,8 +76,8 @@ class BatchController extends Controller
     {
         $batch = Batch::findOrFail($id);
 
-        $streams = Stream::select('id','name')->get();
-        return view('admin.batch.edit')->with(compact('batch','streams'));
+        // $streams = Stream::select('id','name')->get();
+        return view('admin.batch.edit')->with(compact('batch'));
     }
 
     /**
@@ -111,23 +111,23 @@ class BatchController extends Controller
             foreach($groups as $group)
             {
 
-                //delete all group student 
+                //delete all group student
                 DB::table('group_student')->where('group_id',$group->id)->delete();
-                
+
                 //delete all group_subject
                 $groupSubjects = GroupSubject::withTrashed()->where('group_id', $group->id)->get();
-    
+
                 foreach($groupSubjects as $groupSubject)
                 {
                     //fetach all group subject teacher assosciated with group subject
                     $groupSubjectTeachers = DB::table('group_subject_teacher')->where('group_subject_id', $groupSubject->id)->get();
-    
+
                     foreach($groupSubjectTeachers as $groupSubjectTeacher)
                     {
                         //delete all attendance assosciated with group subject teacher
                         Attendance::withTrashed()->where('group_subject_teacher_id', $groupSubjectTeacher->id)->forceDelete();
                     }
-    
+
                     //now delete all the group subject teacher assosciated with group subject
                     DB::table('group_subject_teacher')->where('group_subject_id', $groupSubject->id)->delete();
                     $groupSubject->delete();
@@ -137,14 +137,14 @@ class BatchController extends Controller
             }
             Student::where('batch_id', $id)->delete();
             $batch->delete();
-            return response()->json(['msg'=>'Batch Deleted Successfully.', 'status'=>'true'],200); 
+            return response()->json(['msg'=>'Batch Deleted Successfully.', 'status'=>'true'],200);
         }
         catch(\Illuminate\Database\QueryException $e){
             Log::error("Error while deleting group. Error report: ". $e);
             if($e->getCode() == "23000"){
-                return response()->json(['msg'=>'Batch cannot be deleted.Delete all the assosciated students and groups first.','status'=>'false'],200); 
+                return response()->json(['msg'=>'Batch cannot be deleted.Delete all the assosciated students and groups first.','status'=>'false'],200);
             }
-                return response()->json(['msg'=>'Oops! Error Occured. Please Try Again Later.','status'=>'false'],200); 
+                return response()->json(['msg'=>'Oops! Error Occured. Please Try Again Later.','status'=>'false'],200);
             }
     }
 
@@ -162,9 +162,9 @@ class BatchController extends Controller
         foreach($groups as $group)
         {
 
-            //delete all group student 
+            //delete all group student
             DB::table('group_student')->where('group_id',$group->id)->delete();
-            
+
             //delete all group_subject
             $groupSubjects = GroupSubject::withTrashed()->where('group_id', $group->id)->get();
 
@@ -193,11 +193,11 @@ class BatchController extends Controller
             $batch->start_date = date('Y-m-d');
             $batch->end_date = date('Y-m-d', strtotime("+6 months", strtotime(date('Y-m-d'))));
             $batch->save();
-            return response()->json(['msg'=>'All assosciations with this batch deleted successfully']); 
+            return response()->json(['msg'=>'All assosciations with this batch deleted successfully']);
         }else{
             Student::where('batch_id', $id)->delete();
             $batch->delete();
-            return response()->json(['msg'=>'All assosciations with this batch along with the batch deleted successfully']); 
+            return response()->json(['msg'=>'All assosciations with this batch along with the batch deleted successfully']);
         }
 
     }
