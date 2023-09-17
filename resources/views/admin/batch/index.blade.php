@@ -17,8 +17,6 @@
             <tr class="table_title">
                 <th>S.N</th>
                 <th>Batch Name</th>
-                <th>Stream</th>
-                <th>Semester</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th class="text-center">Action</th>
@@ -29,8 +27,6 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $batch->name }}</td>
-                <td>{{ $batch->stream->name }}</td>
-                <td>{{ $batch->semester }}</td>
                 <td>{{ $batch->start_date }}</td>
                 <td>{{ $batch->end_date }}</td>
                 <td class="text-center">

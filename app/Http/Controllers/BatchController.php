@@ -23,8 +23,7 @@ class BatchController extends Controller
      */
     public function index()
     {
-        $batches = Batch::with('stream:id,name')
-                            ->get();
+        $batches = Batch::all();
         return view('admin.batch.index')->with(compact('batches'));
     }
 
@@ -35,9 +34,7 @@ class BatchController extends Controller
      */
     public function create()
     {
-        $streams = Stream::select('id','name')->get();
-
-        return view('admin.batch.create')->with(compact('streams'));
+        return view('admin.batch.create');
     }
 
     /**

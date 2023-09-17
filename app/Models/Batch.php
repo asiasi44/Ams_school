@@ -26,9 +26,6 @@ class Batch extends Model
      *
      * @return void
      */
-    public function stream(){
-        return $this->belongsTo(Stream::class);
-    }
 
 
     /**

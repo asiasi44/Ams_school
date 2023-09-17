@@ -26,11 +26,9 @@ class BatchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|max:255|string|unique:batches,name,'.$this->id.',id,stream_id,'.$this->stream_id,
-            'stream_id'=>['required','integer','exists:streams,id'],
+            'name'=>'required|max:255|string|unique:batches,name,',
             'start_date'=>'required|date',
             'end_date'=>'required|date|after:start_date',
-            'semester'=>'required|integer|between:1,8',
         ];
     }
 }
