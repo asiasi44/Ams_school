@@ -37,7 +37,7 @@
                     {{ (!empty(old('batch_id')) && old('batch_id') == $batch->id) ? 'selected': ''}}
                     {{ (isset($student) && $student->batch_id == $batch->id && empty(old('batch_id'))) ? 'selected' : '' }} 
                     >
-                    {{ $batch->name }} - {{ $batch->stream->name}}
+                    {{ $batch->name }}
                 </option>
                 @empty
                     <option value="" disabled>No options available</option>

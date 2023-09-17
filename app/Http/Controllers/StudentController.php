@@ -45,6 +45,7 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
+        dd($request->all());
         $input = $request->validated();
         try{
             Student::create($input);

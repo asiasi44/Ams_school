@@ -38,7 +38,6 @@
                 <td>Email</td>
                 <td>Roll No</td>
                 <td>Batch</td>
-                <td>Stream</td>
                 <td>Status</td>
                 <th class="text-center">Action</th>
             </tr>
@@ -51,7 +50,6 @@
                 <td>{{ $student->email }}</td>
                 <td>{{ $student->roll_no }}</td>
                 <td>{{ ucfirst($student->batch->name) }}</td>
-                <td>{{ ucfirst($student->batch->stream->name) }}</td>
                 <td>{{ is_null($student->deleted_at) ? 'Active' : 'Dropped' }}</td>
                 <td class="text-center">
                     <a href="{{route('student.edit',$student->id)}}"><i class="far fa-edit"></i></a> 

@@ -28,6 +28,7 @@ class Student extends Authenticatable
     protected $fillable=[
         'roll_no',
          'name',
+         'email',
          'batch_id',
          'status' ];
 
