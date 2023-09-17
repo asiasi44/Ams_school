@@ -34,9 +34,8 @@ class StudentGroupAssignController extends Controller
         $groups = Group::all();
         $students = Student::all();
         $groups = Group::all();
-        $batches = Batch::with('stream:id,name')->get();
-        $streams = Stream::all();
-        return view('admin.student_group_assign.create', compact('students', 'groups', 'batches', 'streams'));
+        $batches = Batch::all();
+        return view('admin.student_group_assign.create', compact('students', 'groups', 'batches'));
     }
 
     /**

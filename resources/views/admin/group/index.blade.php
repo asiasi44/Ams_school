@@ -27,7 +27,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ ucfirst($group->name) }}</td>
                 <td>{{ ucfirst($group->type) }}</td>
-                <td>{{ $group->batch->name }} - {{ $group->batch->stream->name}}</td>
+                <td>{{ $group->batch->name }}</td>
                 <td class="text-center">
                     <a href="{{route('group.edit',$group->id)}}"><i class="far fa-edit"></i></a> 
                     | 

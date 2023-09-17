@@ -1,27 +1,4 @@
 <div class="row gx-5 align-items-center">
-    <div class="col-md-6 mt-5">
-        <div class="row align-items-center">
-            <label for="stream_id" class=" col-md-4 form-label" >Stream<span class="red_text"><b>*</b></span></label>
-            
-            <select id="stream_id" name="stream_id" class="col-md-4 form-control form-select  form-select-sm " >
-               <option value="" selected disabled >--Choose Stream--</option>
-                @forelse($streams as $stream)
-                <option 
-                    value="{{ $stream->id}}" 
-                    {{ (!empty(old('stream_id')) && old('stream_id') == $stream->id) ? 'selected': ''}}
-                    {{ (isset($assignedGroup) && $assignedGroup->batch->stream_id == $stream->id && empty(old('stream_id'))) ? 'selected' : '' }}
-                    >                    
-                    {{ $stream->name }}
-                </option>
-                @empty
-                    <option value="" disabled>No options available</option>
-                @endforelse
-            </select>
-            @error('stream_id')
-                <p class="text-danger">{{ $message }}</p>
-            @enderror
-        </div>
-    </div>
 
     <div class="col-md-6 mt-5">
         <div class="align-items-center">
@@ -32,7 +9,7 @@
                 <option value="{{ $batch->id }}" 
                     {{ (!empty(old('batch_id')) && old('batch_id') == $batch->id) ? 'selected': ''}}
                     {{ (isset($assignedGroup) && $assignedGroup->students[0]->batch->id == $batch->id && empty(old('batch_id'))) ? 'selected' : '' }}
-                > {{ ucfirst($batch->name) }} - {{ ucfirst($batch->stream->name) }}
+                > {{ ucfirst($batch->name) }}
                 </option>    
                 @endforeach 
             </select>

@@ -47,7 +47,7 @@
                     {{ (!empty(old('batch_id')) && old('batch_id') == $batch->id) ? 'selected': ''}}
                     {{ (isset($group) && $group->batch_id == $batch->id && empty(old('batch_id'))) ? 'selected' : '' }} 
                     >
-                    {{ $batch->name }} - {{$batch->stream->name }}
+                    {{ $batch->name }}
                 </option>
                 @endforeach
             </select>
