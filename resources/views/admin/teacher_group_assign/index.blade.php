@@ -8,7 +8,23 @@
     <h1>Assign Teacher to Section Subject</h1>
     @include('layouts.admin.formTabs')
 </div>
-@include('layouts.basic.tableHead',["table_title" => "Teacher Assigned to Section Subject List", "url" => "teacher_subject_group_assign.create"])
+<section class="my-3 pt-3">
+    <div class="text-center">
+        <h1 class="fs-2 title">Teacher Group Assign</h1>
+    </div>
+    <div class="underline mx-auto"></div>
+</section>
+<!-- page title end -->
+
+<section class="addbtn">
+
+    <a href="{{route('teacher-group-assign.create')}}">
+        <button class="btn btn-primary">
+            <i class='bx bx-add-to-queue'></i>
+                Add
+        </button>
+    </a>
+</section>
 
 <div class="table_container mt-3">
     <table class="_table mx-auto amsTable">
@@ -17,7 +33,6 @@
                 <th>S.N</th>
                 <th>Name</th>
                 <th>Section</th>
-                <th>Subject</th>
                 <th>Days</th>
                 <th>Max Class Per Day</th>
                 <th class="text-center">Action</th>
@@ -29,15 +44,20 @@
             @endphp
             @forelse($teachers as $teacher)
 
+           @forelse ($groups as $group )
+
+           @empty
+
+           @endforelse
+
                     <tr>
                         <td>{{ $count }}</td>
                         <td>{{ $teacher->name }}</td>
-                        <td>{{ $group->group_id }}</td>
-                        <td>{{ $group->subject_id}}</td>
-                        <td>{{ $groupSubject->pivot->days}}</td>
-                        <td>{{ $groupSubject->pivot->max_class_per_day}}</td>
+                        <td>{{ $group->name }}</td>
+                        <td>Days after create</td>
+
                         <td class="text-center">
-                            <a href="{{route('teacher_subject_group_assign.edit', [$groupSubject->id, $teacher->id])}}"><i class="far fa-edit"></i></a>
+                            {{-- <a href="{{route('teacher_subject_group_assign.edit', [$groupSubject->id, $teacher->id])}}"><i class="far fa-edit"></i></a> --}}
                         </td>
                         @php
                             $count++
@@ -47,6 +67,7 @@
             @empty
             <td colspan='7' class="text-center">No users available</td>
             @endforelse
+
         </tbody>
     </table>
 </div>

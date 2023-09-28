@@ -22,7 +22,7 @@ class VerifyPasswordChange
                 return redirect()->route('change-password');
             else
                 return $next($request);
-        
+
         else
             return $next($request);
     }

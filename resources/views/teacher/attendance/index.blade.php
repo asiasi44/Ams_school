@@ -5,9 +5,7 @@
 @section('content')
 <div class="below_header">
     <!-- <h1>Attendance</h1> -->
-    <h1>Daily Attendance :{{ ucfirst($subject->code) }} - {{ ucfirst($subject->name) }} |
-        {{ ucfirst($subject->groups->first()->batch->name) }} {{ ucfirst($subject->groups->first()->batch->stream->name) }}
-         - Sec  {{ strlen($subject->groups->first()->name) > 0 ?ucfirst($subject->groups->first()->name) : 'N/A'}}</h1>
+    <h1>Daily Attendance : </h1>
 </div>
 <!-- table start -->
 <div class="table_container mt-5">
@@ -16,28 +14,26 @@
             <tr class="table_title">
                 <th class="border-end">Roll</th>
                 <th class="border-end">Name</th>
-                <th colspan="{{ $attendanceDates->count()}}" class="text-center border-end">Status</th>
-                    @if(!$attendanceDates->has(now()->format('M/d')))
-                        <th class="border-end"><i class='bx bxs-down-arrow text-primary'></i></th>
-                    @endif
+                <th colspan="" class="text-center border-end">Status</th>
+
                 <th class="border-end">Absent Days</th>
                 <th class="border-end">Leave Days</th>
             </tr>
 
             <tr class="table_date">
-                <th colspan="2" class="border-end"></th>
+                {{-- <th colspan="2" class="border-end"></th>
                 @foreach ($attendanceDates as $date=>$attendanceDate)
                     <th class="border-end"> {{$date}}</th>
                 @endforeach
-                
+
                 @if($attendanceDates->isEmpty())
                     <th colspan="1"></th>
-                @endif                    
+                @endif
                 <th colspan="1">
                     @if(!$attendanceDates->has(now()->format('M/d')))
                         {{date('M/d')}}
                     @endif
-                </th>
+                </th> --}}
             </tr>
             @foreach ($students as $student)
             <tr>
@@ -66,27 +62,27 @@
                 @empty
                     <td  class="text-center border-end"> Attendance has not been taken. </td>
                 @endforelse
-                @if(!$attendanceDates->has(now()->format('M/d')))
+
                     <td class="border-end student_attendance_status">
                         <div onclick="toggleState(this)" class="attendance-state" id="attendance_{{$student->roll_no}}" data-attendance-state= "1">
                             <img class="attendance_img" src="{{asset('assets/images/P.svg')}}" id="r_{{$student->roll_no}}">
                         </div>
                     </td>
-                @endif
-                <td>{{ $student->getAbsentDays($groupSubjectTeacherId) }}</td>
-                <td>{{ $student->getLeaveDays($groupSubjectTeacherId) }}</td>
+
+                {{-- <td>{{ $student->getAbsentDays($groupSubjectTeacherId) }}</td> --}}
+                {{-- <td>{{ $student->getLeaveDays($groupSubjectTeacherId) }}</td> --}}
             </tr>
             @endforeach
-            
+
         </table>
         <div class="row justify-content-center">
-            @if ( !$attendanceDates->has(now()->format('M/d')))
+
                 <div class="justify-content-center text-end my-3 me-5">
                     <button id="attendance_add" class="btn btn-success me-3 ms-5">Add More</button>
                     <button id="attendance_remove" class="btn btn-danger me-3">Delete</button>
                     <button class="btn btn-primary my-2 me-5" id="attendance_submit" >Submit</button>
                 </div>
-            @endif
+
         </div>
     </form>
 
@@ -100,7 +96,7 @@
     <script>
 
         var count = 1;
-        var maxCount = {{ $assosciatedGroupSubject->users->first()->pivot->max_class_per_day}}
+        var maxCount =
         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -112,7 +108,7 @@
                                 toast.addEventListener('mouseleave', Swal.resumeTimer)
                             }
                         });
-                      
+
 
         let imageLink = {
             0: "A.svg",
@@ -134,7 +130,7 @@
         let submit = document.getElementById("attendance_submit");
         submit.addEventListener("click", function(event){
             event.preventDefault();
-                        
+
             Swal.fire({
                 title:"Are you Sure?",
                 text:"Once submitted, it cannot be changed.",
@@ -148,7 +144,7 @@
                 if(result.isConfirmed){
                     let student = prepareData();
                     // console.log(student);
-                    $.ajaxSetup({                   
+                    $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                         }
@@ -160,7 +156,7 @@
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "attendances": student,
-                        "teacherSubjectGroup": "{{ $groupSubjectTeacherId }}"
+                        "teacherSubjectGroup": ""
                     },
                     success: function(data){
                         Toast.fire({
@@ -168,7 +164,7 @@
                                     title: data.msg
                                 });
                         setTimeout(() => {
-                            window.location.replace("{{ route('attendance.create',$groupSubjectTeacherId )}}");
+                            window.location.replace("");
                         }, 3000);
                         submit.prop('disabled',true);
                     },
@@ -194,7 +190,7 @@
         let addAttendance =  document.getElementById('attendance_add');
         addAttendance.addEventListener("click", function(event){
             event.preventDefault();
-            count++; 
+            count++;
             if( count <= maxCount){
                 console.log('ere');
                 // console.log('sdfsd',$('.table_title').find('th:secondlast').prev().attr('colspan',count));
@@ -245,7 +241,7 @@
 
                     let attendanceStates = $(this).find('td.student_attendance_status').each(function(){
                         let attendanceState = $(this).children(".attendance-state").attr("data-attendance-state");
-                        
+
                         if(attendanceState == 1)
                         {
                             studentAttendanceState.present++;
@@ -261,7 +257,7 @@
                     });
                     student.push({'rollNo': rollNo,'attendanceStatus':studentAttendanceState});
                 }
-                
+
             });
 
             return student;

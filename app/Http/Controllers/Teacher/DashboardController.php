@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    
+
     public function index()
     {
-        $assosciatedGroupSubject = Auth::user()->groupSubjects;
-        $subjects = [];
-        foreach($assosciatedGroupSubject as $groupSubject){
-            $teacherSubjectGroup = $groupSubject->pivot->id;
-            $subject = Subject::with(['groups'=> function($query) use ($groupSubject){
-                                    $query->where('groups.id',$groupSubject->getAttributes()['group_id']);
-                                }])
-                                ->where('subjects.id',$groupSubject->getAttributes()['subject_id']) //using this method because accessor modifies the attribute
-                                ->first();
-            $subject->teacherSubjectGroup = $teacherSubjectGroup;
-            array_push($subjects,$subject);
+        // $assosciatedGroupSubject = Auth::user()->groupSubjects;
+        // $subjects = [];
+        // foreach($assosciatedGroupSubject as $groupSubject){
+        //     $teacherSubjectGroup = $groupSubject->pivot->id;
+        //     $subject = Subject::with(['groups'=> function($query) use ($groupSubject){
+        //                             $query->where('groups.id',$groupSubject->getAttributes()['group_id']);
+        //                         }])
+        //                         ->where('subjects.id',$groupSubject->getAttributes()['subject_id']) //using this method because accessor modifies the attribute
+        //                         ->first();
+        //     $subject->teacherSubjectGroup = $teacherSubjectGroup;
+        //     array_push($subjects,$subject);
 
-        }
-        return view('teacher.dashboard.index',compact('subjects'));    
+        // }
+        return view('teacher.dashboard.index');
     }
 }

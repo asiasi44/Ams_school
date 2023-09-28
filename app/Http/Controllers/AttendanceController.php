@@ -28,41 +28,44 @@ class AttendanceController extends Controller
      */
     public function index($id)
     {
-        $groupSubjectTeacherId = $id;
-        
-        $assosciatedGroupSubject = GroupSubject::whereHas('users', function($q)use($groupSubjectTeacherId){
-                                                    $q->where('group_subject_teacher.id',$groupSubjectTeacherId);
-                                                })
-                                                ->with(['users'=>function($q)use($groupSubjectTeacherId){
-                                                    $q->where('group_subject_teacher.id',$groupSubjectTeacherId);
-                                                }])
-                                                ->first();
+        // $groupSubjectTeacherId = $id;
 
-        $subject = Subject::with(['groups'=> function($query) use ($assosciatedGroupSubject){
-                                    $query->where('groups.id',$assosciatedGroupSubject->getAttributes()['group_id']);
-                                }])
-                                ->where('subjects.id',$assosciatedGroupSubject->getAttributes()['subject_id']) //using this method because accessor modifies the attribute
-                                ->first();
-                                                  
+        // $assosciatedGroupSubject = GroupSubject::whereHas('users', function($q)use($groupSubjectTeacherId){
+        //                                             $q->where('group_subject_teacher.id',$groupSubjectTeacherId);
+        //                                         })
+        //                                         ->with(['users'=>function($q)use($groupSubjectTeacherId){
+        //                                             $q->where('group_subject_teacher.id',$groupSubjectTeacherId);
+        //                                         }])
+        //                                         ->first();
 
-        $students = Student::with(['attendance'=> function($query)use($groupSubjectTeacherId){
-                                $query->where('attendances.group_subject_teacher_id',$groupSubjectTeacherId)
-                                        ->where('created_at','>', Carbon::now()->subDays(6));
-                            }])->whereHas('groups',function($query) use($subject){
-                                $query->where('groups.id',$subject->groups->first()->id);
-                            })
-                            ->orderBy('students.roll_no')
-                            ->get();
+        // $subject = Subject::with(['groups'=> function($query) use ($assosciatedGroupSubject){
+        //                             $query->where('groups.id',$assosciatedGroupSubject->getAttributes()['group_id']);
+        //                         }])
+        //                         ->where('subjects.id',$assosciatedGroupSubject->getAttributes()['subject_id']) //using this method because accessor modifies the attribute
+        //                         ->first();
 
-        $attendanceDates = Attendance::where('group_subject_teacher_id',$groupSubjectTeacherId)
-                                        ->where('created_at','>', Carbon::now()->subDays(6))
-                                        ->get()
-                                        ->groupBy(function($query){
-                                            return Carbon::parse($query->created_at)->format('M/d');
-                                        })
-                                        ->take(5);
 
-        return view('teacher.attendance.index',compact('assosciatedGroupSubject','subject','students','groupSubjectTeacherId', 'attendanceDates'));
+        // $students = Student::with(['attendance'=> function($query)use($groupSubjectTeacherId){
+        //                         $query->where('attendances.group_subject_teacher_id',$groupSubjectTeacherId)
+        //                                 ->where('created_at','>', Carbon::now()->subDays(6));
+        //                     }])->whereHas('groups',function($query) use($subject){
+        //                         $query->where('groups.id',$subject->groups->first()->id);
+        //                     })
+        //                     ->orderBy('students.roll_no')
+        //                     ->get();
+
+
+
+        // $attendanceDates = Attendance::where('group_subject_teacher_id',$groupSubjectTeacherId)
+        //                                 ->where('created_at','>', Carbon::now()->subDays(6))
+        //                                 ->get()
+        //                                 ->groupBy(function($query){
+        //                                     return Carbon::parse($query->created_at)->format('M/d');
+        //                                 })
+        //                                 ->take(5);
+        $students = Student::all();
+
+        return view('teacher.attendance.index',compact('students'));
     }
 
     /**
@@ -130,7 +133,7 @@ class AttendanceController extends Controller
         $groupSubjectTeacherIds = $attendances->keys();
 
         $assosciatedGroupSubjectTeacher = GroupSubjectTeacher::whereIn('id',$groupSubjectTeacherIds)->get();
-        
+
         $subjects = [];
         foreach($assosciatedGroupSubjectTeacher as $groupSubjectTeacher){
             $subject = Subject::with(['groups'=> function($query) use ($groupSubjectTeacher){
@@ -140,12 +143,12 @@ class AttendanceController extends Controller
                                 ->first();
 
             $subject->teacherSubjectGroup = $groupSubjectTeacher->id;
-        
-            
+
+
             array_push($subjects,$subject);
 
         }
-        return view('admin.attendance.index',compact('subjects'));    
+        return view('admin.attendance.index',compact('subjects'));
     }
 
     /**
@@ -164,9 +167,9 @@ class AttendanceController extends Controller
                                     ->where('date',date('Y-m-d'))
                                     ->get()
                                     ->sortBy('student.roll_no');
-                                    
+
         $total_classes_of_day = $attendances[0]->present+$attendances[0]->absent+$attendances[0]->leave;
-        
+
         $assosciatedGroupSubject = GroupSubject::whereHas('users', function($q)use($groupSubjectTeacherId){
                                                     $q->where('group_subject_teacher.id',$groupSubjectTeacherId);
                                                 })
@@ -180,9 +183,9 @@ class AttendanceController extends Controller
                                 }])
                                 ->where('subjects.id',$assosciatedGroupSubject->getAttributes()['subject_id']) //using this method because accessor modifies the attribute
                                 ->first();
-                                                  
 
-        return view('admin.attendance.edit',compact('total_classes_of_day','attendances','assosciatedGroupSubject','subject','groupSubjectTeacherId'));   
+
+        return view('admin.attendance.edit',compact('total_classes_of_day','attendances','assosciatedGroupSubject','subject','groupSubjectTeacherId'));
     }
 
     /**
@@ -208,7 +211,7 @@ class AttendanceController extends Controller
                 $attendance->present = $attendanceAndRoll['attendanceStatus']['present'];
                 $attendance->absent = $attendanceAndRoll['attendanceStatus']['absent'];
                 $attendance->leave = $attendanceAndRoll['attendanceStatus']['leave'];
-                $attendance->save();              
+                $attendance->save();
             }
             DB::commit();
             return response()->json(['msg'=>'Attendance Has Been Updated Successfully!'],200);
@@ -232,14 +235,14 @@ class AttendanceController extends Controller
 
     public function sendDailyReportMail(){
         $batches = Batch::all();
-        $adminEmail = MailHelper::getAdminEmail();  
+        $adminEmail = MailHelper::getAdminEmail();
 
         foreach($batches as $batch){
             $batch_holiday = Holiday::where('date',date('Y-m-d'))
                             ->where('batch_id',$batch->id)
                             ->first();
 
-            $students = Student::whereHas('attendance',function($query){    //Students whose attendances were taken today        
+            $students = Student::whereHas('attendance',function($query){    //Students whose attendances were taken today
                                 $query->where('date',date('Y-m-d'));
                             })
                             ->where('batch_id',$batch->id)
@@ -251,11 +254,11 @@ class AttendanceController extends Controller
                     $mainGroups = Group::where('batch_id',$batch->id)
                     ->where('type','compulsory')
                     ->get();
-                    
+
                     $optionalGroups = Group::where('batch_id',$batch->id)
                     ->where('type','optional')
-                    ->get(); 
-                    
+                    ->get();
+
                     // if($batch->id == 1){
                         // return new DailyAttendanceReport($batch,$mainGroups,$optionalGroups);
                         $mail = Mail::to($adminEmail)
@@ -270,10 +273,10 @@ class AttendanceController extends Controller
                                     ])
                                     ->queue(new DailyAttendanceReport($batch,$mainGroups,$optionalGroups));
                     // }
-                    
+
                 }
             }
-           
+
         }
 
         return true;

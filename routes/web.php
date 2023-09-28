@@ -22,6 +22,7 @@ use App\Http\Controllers\StudentViewController;
 use App\Http\Controllers\Teacher\DashboardController as ControllersTeacherDashboardController;
 use App\Http\Controllers\Teacher\TeacherFeedbackController;
 use App\Http\Controllers\TeacherSubjectGroupAssignController;
+use App\Http\Controllers\TeacherAssignController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -238,6 +239,14 @@ Route::group(['middleware'=>['role:admin','password.change']],function(){
         Route::put('/student-group-assign/{id}', 'update')->name('student-group-assign.update');
         Route::delete('/student-group-assign/{id}','destroy')->name('student-group-assign.delete');
     });
+
+
+    Route::controller(TeacherAssignController::class)->group( function(){
+        Route::get('/teacher-group-assign','index')->name('teacher-group-assign.index');
+        Route::get('/teacher-group-assign/create','create')->name('teacher-group-assign.create');
+
+    });
+
 
     Route::controller(SearchController::class)->group( function(){
         //livesearch

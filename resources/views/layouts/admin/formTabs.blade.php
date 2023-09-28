@@ -13,7 +13,7 @@
             <a class="nav-item nav-link nav_item below_header_btn" href="{{route('group.list')}}" role="tab">Section</a>
             {{-- <a class="nav-item nav-link nav_item below_header_btn" href="{{route('subject_group_assign.list')}}" role="tab">Section Subject</a> --}}
             <a class="nav-item nav-link nav_item below_header_btn" href="{{route('student-group-assign.list')}}" role="tab">Section Student</a>
-            <a class="nav-item nav-link nav_item below_header_btn" href="{{route('teacher_subject_group_assign.list')}}" role="tab">Teacher Section Subject</a>
+            <a class="nav-item nav-link nav_item below_header_btn" href="{{route('teacher-group-assign.index')}}" role="tab">Teacher Section Subject</a>
             <a class="nav-item nav-link nav_item below_header_btn" href="{{route('holiday.list')}}" role="tab">Holiday</a>
             <a class="nav-item nav-link nav_item below_header_btn" href="{{route('feedbackEmail.list')}}" role="tab">Feedback Email</a>
 
